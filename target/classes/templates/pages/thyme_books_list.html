@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kitab Listesi</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+          crossorigin="anonymous">
+    <link th:href="@{../css/css.css}" rel="stylesheet">
+</head>
+<body>
+
+
+<div class="container">
+
+    <h1>Kitap Listesi </h1>
+
+
+                <table class="table">
+                    <thead>
+                    <form th:action="@{search}" th:object="${search}">
+                        <label for="search">Kitap İsmi:</label> <input name="search"
+                                                                   id="search">
+                        <input type="submit" value="Kitap Ara" class="btn btn-info"  />
+                    </form>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Kitap İsmi</th>
+                        <th>Sayfa Sayısı</th>
+                        <th>Yayın Tarihi</th>
+                        <th>Yazarlar</th>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    <tr th:each="books : ${book}">
+                        <td th:text="${books.bookId}"></td>
+                        <td th:text="${books.bookName}"></td>
+                        <td th:text="${books.bookPageCount}"></td>
+                        <td th:text="${books.publishDate}"></td>
+                        <td th:text="${books.author.getAuthorName()}"></td>
+                        <td th:text="${books.author.getAuthorSurname()}"></td>
+                        <td >
+                            <form th:action="@{delete}" method="post">
+                                <input type="hidden" name="id" th:value="${books.bookId}" />
+                                <input type="submit" value="Delete" class="btn btn-danger" />
+                            </form>
+                        </td>
+                        <td >
+                            <form th:action="@{edit}" method="get">
+                                <input type="hidden" name="id" th:value="${books.bookId}" />
+                                <input type="submit" value="Delete" class="btn btn-warning" />
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p class="my-5">
+                    <a href="/frontend/books/save" class="btn btn-primary">Kitap Kaydet </a>
+                </p>
+
+
+
+</div>
+</body>
+</html>
